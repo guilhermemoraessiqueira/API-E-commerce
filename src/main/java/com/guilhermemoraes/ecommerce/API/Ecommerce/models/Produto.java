@@ -35,8 +35,4 @@ public class Produto implements Serializable {
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
     }
-
-    public void retornaAtributos(){
-        String = this.getId() + " "
-    }
 }
