@@ -62,7 +62,6 @@ public class CarrinhoService {
         }
 
         atualizarValorTotal(carrinho);
-        atualizarQuantidadeEstoque(carrinho);
         return carrinhoRepository.save(carrinho);
     }
 
@@ -73,20 +72,20 @@ public class CarrinhoService {
         carrinho.setValorTotal(valorTotal);
     }
 
-    private void atualizarQuantidadeEstoque(Carrinho carrinho){
-
-        for (ItemCarrinho itemCarrinho : carrinho.getListaCarrinho()){
-            Produto produto = itemCarrinho.getProduto();
-            int quantidadeNocCarrinho = itemCarrinho.getQuantidadeProduto();
-
-            if (quantidadeNocCarrinho <= 0 || quantidadeNocCarrinho > produto.getQuantidadeEstoque()){
-                throw new RuntimeException("Quantidade no carrinho inválida");
-            }
-
-            int novaQuantidadeEstoque = produto.getQuantidadeEstoque() - quantidadeNocCarrinho;
-            produto.setQuantidadeEstoque(novaQuantidadeEstoque);
-        }
-
-        carrinhoRepository.save(carrinho);
-    }
+//    private void atualizarQuantidadeEstoque(Carrinho carrinho){
+//
+//        for (ItemCarrinho itemCarrinho : carrinho.getListaCarrinho()){
+//            Produto produto = itemCarrinho.getProduto();
+//            int quantidadeNocCarrinho = itemCarrinho.getQuantidadeProduto();
+//
+//            if (quantidadeNocCarrinho <= 0 || quantidadeNocCarrinho > produto.getQuantidadeEstoque()){
+//                throw new RuntimeException("Quantidade no carrinho inválida");
+//            }
+//
+//            int novaQuantidadeEstoque = produto.getQuantidadeEstoque() - quantidadeNocCarrinho;
+//            produto.setQuantidadeEstoque(novaQuantidadeEstoque);
+//        }
+//
+//        carrinhoRepository.save(carrinho);
+//    }
 }
