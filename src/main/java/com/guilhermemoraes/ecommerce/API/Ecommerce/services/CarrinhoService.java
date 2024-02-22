@@ -39,7 +39,7 @@ public class CarrinhoService {
         Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         if (quantidade <= 0 || quantidade > produto.getQuantidadeEstoque()) {
-            throw new RuntimeException("Quantidade invalida");
+            throw new RuntimeException("Quantidade inválida! Temos apenas " + produto.getQuantidadeEstoque() + " peças em estoque.");
         }
 
         Optional<ItemCarrinho> itemExistente = carrinho.getListaCarrinho().stream()
@@ -62,6 +62,7 @@ public class CarrinhoService {
         }
 
         atualizarValorTotal(carrinho);
+        atualizarQuantidadeEstoque(carrinho);
         return carrinhoRepository.save(carrinho);
     }
 
@@ -70,5 +71,22 @@ public class CarrinhoService {
                 .mapToDouble(item -> item.getProduto().getPreco() * item.getQuantidadeProduto())
                 .sum();
         carrinho.setValorTotal(valorTotal);
+    }
+
+    private void atualizarQuantidadeEstoque(Carrinho carrinho){
+
+        for (ItemCarrinho itemCarrinho : carrinho.getListaCarrinho()){
+            Produto produto = itemCarrinho.getProduto();
+            int quantidadeNocCarrinho = itemCarrinho.getQuantidadeProduto();
+
+            if (quantidadeNocCarrinho <= 0 || quantidadeNocCarrinho > produto.getQuantidadeEstoque()){
+                throw new RuntimeException("Quantidade no carrinho inválida");
+            }
+
+            int novaQuantidadeEstoque = produto.getQuantidadeEstoque() - quantidadeNocCarrinho;
+            produto.setQuantidadeEstoque(novaQuantidadeEstoque);
+        }
+
+        carrinhoRepository.save(carrinho);
     }
 }
