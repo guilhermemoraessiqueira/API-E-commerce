@@ -20,7 +20,7 @@ public class ItemCarrinho implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idItemCarrinho;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")

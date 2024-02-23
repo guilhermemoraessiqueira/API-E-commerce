@@ -27,7 +27,7 @@ public class ProdutoService {
         Optional<Produto> produtoOptional = produtoRepository.findById(id);
         return produtoOptional.map(produto ->
                 new ProdutoDto(
-                        produto.getId(),
+                        produto.getIdProduto(),
                         produto.getNome(),
                         produto.getDescricao(),
                         produto.getPreco(),

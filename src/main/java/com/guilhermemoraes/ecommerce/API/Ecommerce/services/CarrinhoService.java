@@ -33,10 +33,10 @@ public class CarrinhoService {
         return carrinhos;
     }
 
-    public Carrinho adicionarItemAoCarrinho(Long idCarrinho, Long produtoId, int quantidade) {
+    public Carrinho adicionarItemAoCarrinho(Long idCarrinho, Long idProduto, int quantidade) {
         Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
 
-        Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        Produto produto = produtoRepository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         if (quantidade <= 0 || quantidade > produto.getQuantidadeEstoque()) {
             throw new RuntimeException("Quantidade inválida! Temos apenas " + produto.getQuantidadeEstoque() + " peças em estoque.");
@@ -56,8 +56,6 @@ public class CarrinhoService {
             novoItemCarrinho.setCarrinho(carrinho);
             novoItemCarrinho.setQuantidadeProduto(quantidade);
             itemCarrinhoRepository.save(novoItemCarrinho);
-            System.out.println(carrinho);
-            System.out.println(produto);
             carrinho.getListaCarrinho().add(novoItemCarrinho);
         }
 
@@ -65,11 +63,37 @@ public class CarrinhoService {
         return carrinhoRepository.save(carrinho);
     }
 
+    public Carrinho removerItemDoCarrinho(Long idCarrinho, Long idItemCarrinho){
+
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho)
+                .orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
+
+        ItemCarrinho itemCarrinho = itemCarrinhoRepository.findById(idItemCarrinho)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+        List<ItemCarrinho> listaCarrinho = carrinho.getListaCarrinho();
+
+        listaCarrinho.removeIf(item -> item.equals(itemCarrinho));
+
+        double valorTotalAtualizado = carrinho.getValorTotal() - (itemCarrinho.getProduto().getPreco() * itemCarrinho.getQuantidadeProduto());
+
+        carrinho.setValorTotal(valorTotalAtualizado);
+        itemCarrinhoRepository.deleteById(idItemCarrinho);
+
+        carrinhoRepository.save(carrinho);
+        return carrinho;
+    }
+
     private void atualizarValorTotal(Carrinho carrinho){
         double valorTotal = carrinho.getListaCarrinho().stream()
                 .mapToDouble(item -> item.getProduto().getPreco() * item.getQuantidadeProduto())
                 .sum();
         carrinho.setValorTotal(valorTotal);
+    }
+
+    public Optional<Carrinho> buscarPorId(Long idCarinho) {
+        Optional<Carrinho> carrinho = carrinhoRepository.findById(idCarinho);
+        return carrinho;
     }
 
 //    private void atualizarQuantidadeEstoque(Carrinho carrinho){

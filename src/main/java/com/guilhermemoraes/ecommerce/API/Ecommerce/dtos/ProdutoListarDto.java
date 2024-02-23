@@ -13,7 +13,7 @@ public class ProdutoListarDto{
     }
 
     public ProdutoListarDto(Produto produto) {
-        this.id = produto.getId();
+        this.id = produto.getIdProduto();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         this.quantidadeEstoque = produto.getQuantidadeEstoque();

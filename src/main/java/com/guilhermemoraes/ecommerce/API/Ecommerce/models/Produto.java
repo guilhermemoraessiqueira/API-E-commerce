@@ -22,14 +22,14 @@ public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProduto;
     private String nome;
     private String descricao;
     private double preco;
     private int quantidadeEstoque;
 
     public Produto(String nome, String descricao, double preco, int quantidadeEstoque) {
-        this.id = getId();
+        this.idProduto = getIdProduto();
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
