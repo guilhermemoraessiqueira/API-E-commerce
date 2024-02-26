@@ -34,9 +34,11 @@ public class CarrinhoService {
     }
 
     public Carrinho adicionarItemAoCarrinho(Long idCarrinho, Long idProduto, int quantidade) {
-        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho)
+                .orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
 
-        Produto produto = produtoRepository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        Produto produto = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         if (quantidade <= 0 || quantidade > produto.getQuantidadeEstoque()) {
             throw new RuntimeException("Quantidade inválida! Temos apenas " + produto.getQuantidadeEstoque() + " peças em estoque.");
@@ -82,6 +84,26 @@ public class CarrinhoService {
 
         carrinhoRepository.save(carrinho);
         return carrinho;
+    }
+
+    public Carrinho atualizarQuantidadeItemCarrinho(Long idCarrinho, Long idItemCarrinho){
+
+        Carrinho carrinhoCarregado = carrinhoRepository.findById(idCarrinho)
+                    .orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
+
+            List<ItemCarrinho> listaCarrinho = carrinhoCarregado.getListaCarrinho();
+
+            listaCarrinho.replaceAll(item ->{
+                if (item.getIdItemCarrinho().equals(idItemCarrinho)){
+                    int novaQuantidade = item.getQuantidadeProduto() - 1;
+                    item.setQuantidadeProduto(Math.max(novaQuantidade, 0));
+                }
+                itemCarrinhoRepository.save(item);
+                return item;
+            });
+
+            atualizarValorTotal(carrinhoCarregado);
+            return carrinhoRepository.save(carrinhoCarregado);
     }
 
     private void atualizarValorTotal(Carrinho carrinho){

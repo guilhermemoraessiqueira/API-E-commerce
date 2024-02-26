@@ -54,8 +54,13 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinho);
     }
 
-    @PutMapping("/alterarCarrinho")
-    public void alterarListaCarrinho(){
+    @PutMapping("/alterarCarrinho/idCarrinho/{idCarrinho}/idItemCarrinho/{idItemCarrinho}")
+    public ResponseEntity alterarListaCarrinho(
+            @PathVariable Long idCarrinho,
+            @PathVariable Long idItemCarrinho){
+
+        Carrinho carrinho = carrinhoService.atualizarQuantidadeItemCarrinho(idCarrinho, idItemCarrinho);
+        return ResponseEntity.ok(carrinho);
 
     }
 

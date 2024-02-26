@@ -38,7 +38,7 @@ public class ProdutoService {
 
     public Produto adicionarProduto(ProdutoDto produtoDto) {
         Produto produto = new Produto(
-                produtoDto.getId(),
+                produtoDto.getIdProduto(),
                 produtoDto.getNome(),
                 produtoDto.getDescricao(),
                 produtoDto.getPreco(),

@@ -4,7 +4,7 @@ import com.guilhermemoraes.ecommerce.API.Ecommerce.models.Produto;
 
 public class ProdutoListarDto{
 
-    private Long id;
+    private Long idProduto;
     private String nome;
     private double preco;
     private int quantidadeEstoque;
@@ -13,18 +13,18 @@ public class ProdutoListarDto{
     }
 
     public ProdutoListarDto(Produto produto) {
-        this.id = produto.getIdProduto();
+        this.idProduto = produto.getIdProduto();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         this.quantidadeEstoque = produto.getQuantidadeEstoque();
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdProduto() {
+        return idProduto;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {

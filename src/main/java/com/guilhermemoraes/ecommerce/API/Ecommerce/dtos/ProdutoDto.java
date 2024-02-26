@@ -2,7 +2,7 @@ package com.guilhermemoraes.ecommerce.API.Ecommerce.dtos;
 
 public class ProdutoDto {
 
-    private Long id;
+    private Long idProduto;
     private String nome;
     private String descricao;
     private double preco;
@@ -12,19 +12,19 @@ public class ProdutoDto {
     }
 
     public ProdutoDto(Long id, String nome, String descricao, double preco, int quantidadeEstoque) {
-        this.id = id;
+        this.idProduto = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdProduto() {
+        return idProduto;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {

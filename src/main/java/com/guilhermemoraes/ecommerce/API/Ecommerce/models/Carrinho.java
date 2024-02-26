@@ -26,7 +26,7 @@ public class Carrinho implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCarrinho;
 
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.PERSIST)
     @JsonManagedReference
