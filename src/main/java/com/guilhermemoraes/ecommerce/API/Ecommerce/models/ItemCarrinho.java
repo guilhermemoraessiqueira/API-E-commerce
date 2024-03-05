@@ -32,5 +32,4 @@ public class ItemCarrinho implements Serializable {
     private Carrinho carrinho;
 
     private int quantidadeProduto;
-
 }

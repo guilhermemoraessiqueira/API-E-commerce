@@ -1,6 +1,7 @@
 package com.guilhermemoraes.ecommerce.API.Ecommerce.controllers;
 
 import com.guilhermemoraes.ecommerce.API.Ecommerce.models.Carrinho;
+import com.guilhermemoraes.ecommerce.API.Ecommerce.models.Produto;
 import com.guilhermemoraes.ecommerce.API.Ecommerce.services.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,5 +64,4 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinho);
 
     }
-
 }
